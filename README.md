@@ -390,17 +390,17 @@ Apply complete! Resources: 16 added, 0 changed, 0 destroyed.
     
     ssh-with-k8s-user = <<EOT
     
-    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 129.159.52.204
-    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 164.152.51.169
-    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 144.22.161.239
-    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 168.138.145.95
+    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 129.159.52.204 # adailsilva-node-1
+    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 164.152.51.169 # adailsilva-node-2
+    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 144.22.161.239 # adailsilva-node-3
+    ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 168.138.145.95 # adailsilva-node-4
     
     EOT
     ssh-with-ubuntu-user = <<EOT
-    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 129.159.52.204 # node1
-    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 164.152.51.169 # node2
-    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 144.22.161.239 # node3
-    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 168.138.145.95 # node4
+    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 129.159.52.204 # adailsilva-node-1
+    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 164.152.51.169 # adailsilva-node-2
+    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 144.22.161.239 # adailsilva-node-3
+    ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 168.138.145.95 # adailsilva-node-4
     EOT
 
 

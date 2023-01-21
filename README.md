@@ -262,7 +262,9 @@ Install Terraform from the new repository.
     sudo apt-get install terraform
 
 TIP: Now that you have added the HashiCorp repository, you can install Vault, Consul, Nomad and Packer with the same command.
-Verify the installation
+
+
+## Verify the installation
 
 Verify that the installation worked by opening a new terminal session and listing Terraform's available subcommands.
 
@@ -274,8 +276,6 @@ The most common, useful commands are shown first, followed by
 less common or more advanced commands. If you're just getting
 started with Terraform, stick with the common commands. For the
 other commands, please read the help and docs before usage.
-
-#...
 
 Add any subcommand to terraform -help to learn more about what it does and available options.
 
@@ -386,7 +386,7 @@ Authorization completed! Please close this window and return to your terminal to
 
 Apply complete! Resources: 16 added, 0 changed, 0 destroyed.
 
-    `Outputs:`
+`Outputs:`
     
     ssh-with-k8s-user = <<EOT
     

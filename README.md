@@ -322,12 +322,12 @@ From a command prompt, run the following command:
 
 
 
-# Configure OCI credentials.
+# Configure OCI credentials
 
 Configure OCI credentials. If you obtain a session token (with oci session authenticate), make sure to put the correct region, and when prompted for the profile name, enter DEFAULT so that Terraform finds the session token automatically.
 
 
-# Commands:
+# Commands
 
     oci session authenticate
 
@@ -375,7 +375,7 @@ Authorization completed! Please close this window and return to your terminal to
 
 
 
-# UP command:
+# UP command
 
     terraform apply
     Enter a value: `yes`

@@ -178,3 +178,246 @@ tail -n 100 -f /var/log/cloud-init-output.log
 [kubeadm]: https://kubernetes.io/docs/reference/setup-tools/kubeadm/
 [oci]: https://www.oracle.com/cloud/compute/
 [oke]: https://www.oracle.com/cloud-native/container-engine-kubernetes/
+
+
+
+
+
+#### Comandos úteis
+# Install Kubernetes (kubernetes tools)
+
+## Installing kubeadm
+
+[Link]: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+
+    Update the apt package index and install packages needed to use the Kubernetes apt repository:
+
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https ca-certificates curl
+
+    Download the Google Cloud public signing key:
+
+    sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+    Add the Kubernetes apt repository:
+
+    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+    Update apt package index, install kubelet, kubeadm and kubectl, and pin their version:
+
+    sudo apt-get update
+    sudo apt-get install -y kubelet kubeadm kubectl
+    sudo apt-mark hold kubelet kubeadm kubectl
+
+Note: In releases older than Debian 12 and Ubuntu 22.04, /etc/apt/keyrings does not exist by default. You can create this directory if you need to, making it world-readable but writeable only by admins.
+
+
+
+
+
+# Install Terraform
+
+[Link]: https://developer.hashicorp.com/terraform/tutorials/oci-get-started/install-cli?in=terraform%2Foci-get-started
+
+
+Ensure that your system is up to date, and you have the gnupg, software-properties-common, and curl packages installed. You will use these packages to verify HashiCorp's GPG signature, and install HashiCorp's Debian package repository.
+
+ sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+
+Install the HashiCorp GPG key.
+
+ wget -O- https://apt.releases.hashicorp.com/gpg | \
+    gpg --dearmor | \
+    sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+Verify the key's fingerprint.
+
+ gpg --no-default-keyring \
+    --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+    --fingerprint
+
+The gpg command will report the key fingerprint:
+
+/usr/share/keyrings/hashicorp-archive-keyring.gpg
+-------------------------------------------------
+pub   rsa4096 2020-05-07 [SC]
+      E8A0 32E0 94D8 EB4E A189  D270 DA41 8C88 A321 9F7B
+uid           [ unknown] HashiCorp Security (HashiCorp Package Signing) <security+packaging@hashicorp.com>
+sub   rsa4096 2020-05-07 [E]
+
+The fingerprint must match E8A0 32E0 94D8 EB4E A189 D270 DA41 8C88 A321 9F7B. You can also verify the key on Security at HashiCorp under Linux Package Checksum Verification.
+
+Add the official HashiCorp repository to your system. The lsb_release -cs command finds the distribution release codename for your current system, such as buster, groovy, or sid.
+
+ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+    https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+    sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+Download the package information from HashiCorp.
+
+ sudo apt update
+
+Install Terraform from the new repository.
+
+ sudo apt-get install terraform
+
+TIP: Now that you have added the HashiCorp repository, you can install Vault, Consul, Nomad and Packer with the same command.
+Verify the installation
+
+Verify that the installation worked by opening a new terminal session and listing Terraform's available subcommands.
+
+ terraform -help
+Usage: terraform [-version] [-help] <command> [args]
+
+The available commands for execution are listed below.
+The most common, useful commands are shown first, followed by
+less common or more advanced commands. If you're just getting
+started with Terraform, stick with the common commands. For the
+other commands, please read the help and docs before usage.
+
+#...
+
+Add any subcommand to terraform -help to learn more about what it does and available options.
+
+* There is a need to install and configure the OCI, before executing the commands below, so that they work as expected.
+ terraform plan
+ terraform -help plan
+
+Troubleshoot
+
+If you get an error that terraform could not be found, your PATH environment variable was not set up properly. Please go back and ensure that your PATH variable contains the directory where Terraform was installed.
+
+
+
+
+
+# Install OCI - Installing the CLI
+
+[Link]: https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm
+
+
+bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
+
+ Note
+
+To run a 'silent' install that accepts all default values with no prompts, use the --accept-all-defaults parameter.
+
+Example:
+bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)" --accept-all-defaults
+
+Run:
+source ~/.bashrc
+
+Or run:
+sudo cp /home/adailsilva/bin/oci /usr/local/bin
+sudo cp /home/adailsilva/Apps/OracleCloud/bin/oci /usr/local/bin
+
+
+Verifying the OCI CLI Installation
+
+    From a command prompt, run the following command:
+
+    oci --version
+
+
+
+
+
+# Configure OCI credentials.
+
+Configure OCI credentials. If you obtain a session token (with oci session authenticate), make sure to put the correct region, and when prompted for the profile name, enter DEFAULT so that Terraform finds the session token automatically.
+
+
+# Commands:
+
+oci session authenticate
+
+Region:	
+32: sa-saopaulo-1
+
+Tenancy:
+sa-saopaulo-1
+
+Sign in with your Oracle Cloud Infrastructure credentials
+adail101@hotmail.com
+[password]
+
+
+
+# Result (Example)
+oci session authenticate
+Enter a region by index or name(e.g.
+1: af-johannesburg-1, 2: ap-chiyoda-1, 3: ap-chuncheon-1, 4: ap-dcc-canberra-1, 5: ap-hyderabad-1,
+6: ap-ibaraki-1, 7: ap-melbourne-1, 8: ap-mumbai-1, 9: ap-osaka-1, 10: ap-seoul-1,
+11: ap-singapore-1, 12: ap-sydney-1, 13: ap-tokyo-1, 14: ca-montreal-1, 15: ca-toronto-1,
+16: eu-amsterdam-1, 17: eu-dcc-milan-1, 18: eu-frankfurt-1, 19: eu-madrid-1, 20: eu-marseille-1,
+21: eu-milan-1, 22: eu-paris-1, 23: eu-stockholm-1, 24: eu-zurich-1, 25: il-jerusalem-1,
+26: me-abudhabi-1, 27: me-dcc-muscat-1, 28: me-dubai-1, 29: me-jeddah-1, 30: mx-queretaro-1,
+31: sa-santiago-1, 32: sa-saopaulo-1, 33: sa-vinhedo-1, 34: uk-cardiff-1, 35: uk-gov-cardiff-1,
+36: uk-gov-london-1, 37: uk-london-1, 38: us-ashburn-1, 39: us-chicago-1, 40: us-gov-ashburn-1,
+41: us-gov-chicago-1, 42: us-gov-phoenix-1, 43: us-langley-1, 44: us-luke-1, 45: us-phoenix-1,
+46: us-sanjose-1): 32
+    Please switch to newly opened browser window to log in!
+    You can also open the following URL in a web browser window to continue:
+https://login.sa-saopaulo-1.oraclecloud.com/v1/oauth2/authorize?action=login&client_id=iaas_console&response_type=token+id_token&nonce=8674dbbc-ac89-40df-8f97-07f3b44be9ed&scope=openid&public_key=eyJrdHkiOiAiUlNBIiwgIm4iOiAidzZWNU8wdGQ3NEdYYWRaYWsxNGFLMEhjMUh5MmRIMHpDQldOZXhUdHdLWlhiQ29RbUNCV1dsUU9rRXJwUFFXVkQtUURBOE5PSlk1U0l3RW15NmFNWFRlam5fM3JIam44MVdhS1hQOXM0X25VX2xRanlBZU9HSU91bjZpeVNfU2pab1NRek82S0QtVzVraDh2VE84WmxWcXlTWHhkR0x1TC11cmRsVy1PVGw0NTBwVUI3UnlLTkczZDRTdkx3NUlUM1lUUS1sVUdFVExvR0RaWGZnLWdtRmlQNHZtM005dENsUEp3OXhyVWdWQ1JpU1pRRjd1RGltNzZVUldRZkU1ZGZCS1cxY2tkRmhtSlZLbElXSGhwQS1BX3RwSEFQN2pHc2JaMDNSalhhclF5dFhWNnBZS0lIYlJQU3plbmF6MGtMSEpVdDNhRHF6Snk3VEI5bkd0U2p3IiwgImUiOiAiQVFBQiIsICJraWQiOiAiSWdub3JlZCJ9&redirect_uri=http%3A%2F%2Flocalhost%3A8181
+    Completed browser authentication process!
+Config written to: /home/adailsilva/.oci/config
+
+    Try out your newly created session credentials with the following example command:
+
+    oci iam region list --config-file /home/adailsilva/.oci/config --profile DEFAULT --auth security_token
+
+
+
+Authorization completed! Please close this window and return to your terminal to finish the bootstrap process.
+
+
+
+
+
+# UP command:
+
+terraform apply
+Enter a value: `yes`
+
+
+
+# OUTPUT (Examples)
+
+Apply complete! Resources: 16 added, 0 changed, 0 destroyed.
+
+`Outputs:`
+
+ssh-with-k8s-user = <<EOT
+
+ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 129.159.52.204
+ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 164.152.51.169
+ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 144.22.161.239
+ssh -o StrictHostKeyChecking=no -i id_rsa -l k8s 168.138.145.95
+
+EOT
+ssh-with-ubuntu-user = <<EOT
+ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 129.159.52.204 # node1
+ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 164.152.51.169 # node2
+ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 144.22.161.239 # node3
+ssh -o StrictHostKeyChecking=no -l ubuntu -p 22 -i id_rsa 168.138.145.95 # node4
+EOT
+
+
+
+
+
+# Useful commands
+
+export KUBECONFIG=$PWD/kubeconfig
+
+kubectl get nodes
+
+kubectl get pods --all-namespaces
+
+kubectl get pods -n kube-system
+
+
+* To leave the configuration permanently:
+cp /home/adailsilva/Apps/OracleCloudAlwaysFree/kubeconfig /home/adailsilva/.kube/config
+

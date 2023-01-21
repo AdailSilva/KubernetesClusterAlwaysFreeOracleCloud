@@ -327,7 +327,7 @@ From a command prompt, run the following command:
 Configure OCI credentials. If you obtain a session token (with oci session authenticate), make sure to put the correct region, and when prompted for the profile name, enter DEFAULT so that Terraform finds the session token automatically.
 
 
-# Commands
+## Commands
 
     oci session authenticate
 
@@ -343,7 +343,7 @@ adail101@hotmail.com
 
 
 
-# Result (Example)
+### Result (Example)
     oci session authenticate
     Enter a region by index or name(e.g.
     1: af-johannesburg-1, 2: ap-chiyoda-1, 3: ap-chuncheon-1, 4: ap-dcc-canberra-1, 5: ap-hyderabad-1,
@@ -375,14 +375,14 @@ Authorization completed! Please close this window and return to your terminal to
 
 
 
-# UP command
+## UP command
 
     terraform apply
     Enter a value: `yes`
 
 
 
-# OUTPUT (Examples)
+## OUTPUT (Examples)
 
 Apply complete! Resources: 16 added, 0 changed, 0 destroyed.
 
@@ -407,7 +407,7 @@ Apply complete! Resources: 16 added, 0 changed, 0 destroyed.
 
 
 
-# Useful commands
+## Useful commands
 
     export KUBECONFIG=$PWD/kubeconfig
     
